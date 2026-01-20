@@ -1,0 +1,90 @@
+/* Reset simple */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #1e1e1e;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.header {
+    background: #0d0d0d;
+    padding: 1em;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav .menu {
+    list-style: none;
+    display: flex;
+    gap: 1em;
+}
+
+.nav .menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-discord {
+    color: #fff;
+    background: #7289da;
+    padding: 0.8em 1.2em;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero {
+    text-align: center;
+    padding: 3em;
+    background: url('hero-bg.jpg') no-repeat center/cover;
+}
+
+.hero .btn-play {
+    display: inline-block;
+    margin-top: 1em;
+    padding: 1em 1.4em;
+    background: #28a745;
+    border-radius: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 2em;
+    background: #111;
+}
+
+.features .box {
+    max-width: 30%;
+    text-align: center;
+}
+
+.guide {
+    padding: 2em;
+    background: #161616;
+}
+
+.boutique, .vote {
+    text-align: center;
+    padding: 2em;
+}
+
+.footer {
+    text-align: center;
+    padding: 1em;
+    background: #0d0d0d;
+}
