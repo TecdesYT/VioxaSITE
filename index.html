@@ -3,74 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vioxa RP – Serveur Minecraft Roleplay</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>Vioxa RP – Royaume Médiéval</title>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      background: #1b1208;
+      color: #f5e6c8;
     }
+
     header {
       height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+        url('https://images.unsplash.com/photo-1604014237744-8c6a1d9c6b0d') center/cover no-repeat;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
+      border-bottom: 6px solid #8b5a2b;
     }
+
     header h1 {
-      font-size: 4rem;
-      color: #7cf3ff;
+      font-family: 'MedievalSharp', cursive;
+      font-size: 4.5rem;
+      color: #d4af37;
+      text-shadow: 0 0 15px rgba(212,175,55,0.6);
+      letter-spacing: 4px;
     }
+
     header p {
       font-size: 1.4rem;
-      margin: 20px 0;
-      max-width: 600px;
+      margin: 25px 0;
+      max-width: 700px;
     }
+
     .btn {
-      padding: 15px 35px;
-      background: #7cf3ff;
-      color: #000;
+      padding: 15px 45px;
+      background: linear-gradient(180deg, #d4af37, #8b5a2b);
+      color: #1b1208;
       text-decoration: none;
-      border-radius: 30px;
+      border-radius: 8px;
       font-weight: bold;
+      border: 2px solid #f5e6c8;
       transition: 0.3s;
     }
+
     .btn:hover {
-      background: #ffffff;
+      background: linear-gradient(180deg, #f5e6c8, #d4af37);
       transform: scale(1.05);
     }
+
     section {
-      padding: 80px 10%;
+      padding: 90px 12%;
+      background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
     }
+
     h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #7cf3ff;
+      font-family: 'MedievalSharp', cursive;
+      font-size: 3rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #d4af37;
     }
+
+    section p {
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
     }
+
     .card {
-      background: rgba(255,255,255,0.08);
-      padding: 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.6);
+      padding: 35px;
+      border: 3px solid #8b5a2b;
+      border-radius: 12px;
+      text-align: center;
       transition: 0.3s;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
     }
+
     .card:hover {
       transform: translateY(-10px);
-      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 30px rgba(212,175,55,0.4);
     }
+
+    .card span {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .infos {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .info {
+      background: rgba(0,0,0,0.7);
+      padding: 25px 45px;
+      border: 3px solid #d4af37;
+      border-radius: 10px;
+      font-size: 1.1rem;
+    }
+
     footer {
+      background: #0f0803;
       text-align: center;
       padding: 30px;
-      background: rgba(0,0,0,0.4);
+      border-top: 6px solid #8b5a2b;
       font-size: 0.9rem;
     }
   </style>
@@ -79,36 +133,41 @@
 
 <header>
   <h1>VIOXA RP</h1>
-  <p>Plonge dans un serveur Minecraft Roleplay unique, immersif et moderne. Crée ton histoire, forge ta destinée.</p>
-  <a href="#rejoindre" class="btn">Rejoindre le serveur</a>
+  <p>Entrez dans le Royaume de Vioxa. Forgez votre légende dans un monde médiéval roleplay épique.</p>
+  <a href="#rejoindre" class="btn">Entrer dans le Royaume</a>
 </header>
 
 <section>
-  <h2>🌍 À propos de Vioxa RP</h2>
-  <p>Vioxa RP est un serveur Minecraft Roleplay axé sur l'immersion, la liberté de jeu et une communauté mature. Choisis ton rôle, développe ton personnage et influence le monde.</p>
+  <h2>Le Royaume de Vioxa</h2>
+  <p>
+    Vioxa RP est un serveur Minecraft Roleplay médiéval sérieux.
+    Chevaliers, rois, marchands ou brigands : chaque destin façonne l'histoire du royaume.
+  </p>
 </section>
 
 <section>
-  <h2>⚔️ Fonctionnalités</h2>
+  <h2>Chroniques & Systèmes</h2>
   <div class="cards">
-    <div class="card">🏙️ Ville moderne & zones RP</div>
-    <div class="card">👮 Métiers RP (Police, Mafia, Gouvernement…)</div>
-    <div class="card">📜 Système de lois & économie</div>
-    <div class="card">🎭 Roleplay sérieux & encadré</div>
-    <div class="card">🛠️ Plugins exclusifs</div>
-    <div class="card">🤝 Communauté active</div>
+    <div class="card"><span>🏰</span>Royaumes & châteaux</div>
+    <div class="card"><span>⚔️</span>Chevaliers & guerres RP</div>
+    <div class="card"><span>👑</span>Rois, nobles & politique</div>
+    <div class="card"><span>📜</span>Lois & justice médiévale</div>
+    <div class="card"><span>💰</span>Économie féodale</div>
+    <div class="card"><span>🧙</span>Métiers & guildes</div>
   </div>
 </section>
 
 <section id="rejoindre">
-  <h2>🚀 Rejoindre Vioxa RP</h2>
-  <p><strong>IP :</strong> play.vioxa-rp.fr</p>
-  <p><strong>Version :</strong> 1.20+</p>
-  <p><strong>Discord :</strong> discord.gg/vioxa</p>
+  <h2>Rejoindre le Royaume</h2>
+  <div class="infos">
+    <div class="info">🌍 IP : play.vioxa-rp.fr</div>
+    <div class="info">🎮 Version : 1.20+</div>
+    <div class="info">📯 Discord : discord.gg/vioxa</div>
+  </div>
 </section>
 
 <footer>
-  © 2026 Vioxa RP – Serveur Minecraft Roleplay | Tous droits réservés
+  © 2026 Vioxa RP — Royaume Médiéval Minecraft
 </footer>
 
 </body>
