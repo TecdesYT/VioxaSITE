@@ -71,13 +71,6 @@
       color: #d4af37;
     }
 
-    section p {
-      max-width: 950px;
-      margin: auto;
-      text-align: center;
-      font-size: 1.2rem;
-    }
-
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -125,6 +118,16 @@
       text-align: center;
     }
 
+    .info a {
+      color: #f5e6c8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .info a:hover {
+      text-decoration: underline;
+    }
+
     footer {
       background: #0f0803;
       text-align: center;
@@ -143,48 +146,13 @@
 </header>
 
 <section>
-  <h2>Le Monde de Lixar</h2>
-  <p>
-    Lixar est un vaste monde médiéval façonné par ses habitants.
-    Conflits, alliances, commerce et intrigues rythment la vie de ses terres.
-  </p>
-</section>
-
-<section>
   <h2>Fonctionnalités RP</h2>
 
   <div class="cards">
-
-    <a class="card" href="http://play.vioxa.org:25571/" target="_blank">
-      <span>🗺️</span>
-      Dynmap
-    </a>
-
-    <a class="card" href="https://bit.ly/vioxacandidature" target="_blank">
-      <span>⚔️</span>
-      Devenir Staff
-    </a>
-
-    <div class="card">
-      <span>👥</span>
-      Métiers
-    </div>
-
-    <a class="card" href="lois.html">
-      <span>📜</span>
-      Lois et justice RP
-    </a>
-
-    <div class="card">
-      <span>💰</span>
-      Boutique
-    </div>
-
-    <a class="card" href="https://discord.gg/Kt34NnyAVX" target="_blank">
-      <span>🛡️</span>
-      Support
-    </a>
-
+    <a class="card" href="http://play.vioxa.org:25571/" target="_blank"><span>🗺️</span>Dynmap</a>
+    <a class="card" href="https://bit.ly/vioxacandidature" target="_blank"><span>⚔️</span>Devenir Staff</a>
+    <a class="card" href="lois.html"><span>📜</span>Lois et justice RP</a>
+    <a class="card" href="https://discord.gg/Kt34NnyAVX" target="_blank"><span>🛡️</span>Support</a>
   </div>
 </section>
 
@@ -192,31 +160,11 @@
   <h2>Rejoindre Vioxa RP</h2>
 
   <div class="infos">
-
+    <div class="info">🎮 Version : <strong>1.20.6+</strong></div>
+    <div class="info">🌍 IP : <strong>play.vioxa.org</strong></div>
     <div class="info">
-      🌍 IP : <strong>play.vioxa.org</strong>
+      💬 <a href="https://discord.gg/Kt34NnyAVX" target="_blank">Rejoindre le Discord</a>
     </div>
-
-    <div class="info">
-      🎮 Version : <strong>1.20.6+</strong>
-    </div>
-
-    <div class="info">
-      <a href="https://discord.gg/Kt34NnyAVX" target="_blank"
-         style="
-           display:inline-block;
-           padding:14px 30px;
-           background:linear-gradient(180deg,#d4af37,#8b5a2b);
-           color:#1b1208;
-           border-radius:8px;
-           text-decoration:none;
-           font-weight:bold;
-           border:2px solid #f5e6c8;
-         ">
-        💬 Rejoindre le Discord
-      </a>
-    </div>
-
   </div>
 </section>
 
@@ -226,10 +174,8 @@
 
 <script>
   function copyIP() {
-    const ip = 'play.vioxa.org';
-    navigator.clipboard.writeText(ip).then(() => {
-      alert('IP copiée : ' + ip);
-    });
+    navigator.clipboard.writeText('play.vioxa.org')
+      .then(() => alert('IP copiée : play.vioxa.org'));
   }
 </script>
 
