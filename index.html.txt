@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>MineHost - Hébergement Minecraft</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<header>
+    <h1>MineHost</h1>
+    <p>Hébergement Minecraft puissant & fiable</p>
+</header>
+
+<section class="intro">
+    <h2>Pourquoi nous choisir ?</h2>
+    <p>Serveurs rapides, protection anti-DDoS, support 24/7 et performances optimales.</p>
+</section>
+
+<section class="offers">
+    <h2>Nos Offres</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>⚔️ Starter</h3>
+            <p class="price">3,99€ / mois</p>
+            <ul>
+                <li>2 Go RAM</li>
+                <li>10 Slots</li>
+                <li>Stockage SSD</li>
+                <li>Support 24/7</li>
+            </ul>
+            <button>Commander</button>
+        </div>
+
+        <div class="card popular">
+            <h3>🔥 Pro</h3>
+            <p class="price">7,99€ / mois</p>
+            <ul>
+                <li>4 Go RAM</li>
+                <li>30 Slots</li>
+                <li>Stockage SSD NVMe</li>
+                <li>Plugins & Mods</li>
+                <li>Support prioritaire</li>
+            </ul>
+            <button>Commander</button>
+        </div>
+
+        <div class="card">
+            <h3>👑 Ultimate</h3>
+            <p class="price">14,99€ / mois</p>
+            <ul>
+                <li>8 Go RAM</li>
+                <li>Slots illimités</li>
+                <li>SSD NVMe</li>
+                <li>Sauvegardes auto</li>
+                <li>Accès FTP</li>
+            </ul>
+            <button>Commander</button>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 MineHost - Tous droits réservés</p>
+</footer>
+
+</body>
+</html>
