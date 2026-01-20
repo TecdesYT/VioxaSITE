@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vioxa RP – Monde de Lixar</title>
+
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -44,10 +46,10 @@
       padding: 15px 50px;
       background: linear-gradient(180deg, #d4af37, #8b5a2b);
       color: #1b1208;
-      text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
       border: 2px solid #f5e6c8;
+      cursor: pointer;
       transition: 0.3s;
     }
 
@@ -91,6 +93,8 @@
       text-align: center;
       transition: 0.3s;
       box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+      text-decoration: none;
+      color: #f5e6c8;
     }
 
     .card:hover {
@@ -133,7 +137,7 @@
 
 <header>
   <h1>VIOXA RP</h1>
-  <p>Bienvenue dans le Monde de Lixar, un univers Minecraft Roleplay ouvert à tous.</p>
+  <p>Bienvenue dans le Monde de Lixar, un univers Minecraft Roleplay médiéval ouvert à tous.</p>
   <button class="btn" onclick="copyIP()">Rejoindre</button>
 </header>
 
@@ -142,28 +146,47 @@
   <p>
     Lixar est un vaste monde médiéval façonné par ses habitants.
     Conflits, alliances, commerce et intrigues rythment la vie de ses terres.
-    Chaque action a un impact réel sur l’évolution du monde.
   </p>
 </section>
 
 <section>
   <h2>Fonctionnalités RP</h2>
+
   <div class="cards">
-    <div class="card"><span>🗺️</span><a href="http://play.vioxa.org:25571/" target="_blank" style="color:#f5e6c8;text-decoration:none;">Dynmap</a></div>
-    <div class="card"><span>⚔️</span>Devenir Staff</div>
-    <div class="card"><span>👥</span>Métiers</div>
-    <div class="card"><span>📜</span>Lois et justice RP</div>
-    <div class="card"><span>💰</span>Boutique</div>
-    <div class="card"><span>🛡️</span>Support</div>
+
+    <a class="card" href="http://play.vioxa.org:25571/" target="_blank">
+      <span>🗺️</span>Dynmap
+    </a>
+
+    <a class="card" href="https://bit.ly/vioxacandidature" target="_blank">
+      <span>⚔️</span>Devenir Staff
+    </a>
+
+    <div class="card">
+      <span>👥</span>Métiers
+    </div>
+
+    <a class="card" href="lois.html">
+      <span>📜</span>Lois et justice RP
+    </a>
+
+    <div class="card">
+      <span>💰</span>Boutique
+    </div>
+
+    <a class="card" href="https://discord.gg/Kt34NnyAVX" target="_blank">
+      <span>🛡️</span>Support
+    </a>
+
   </div>
 </section>
 
-<section id="rejoindre">
+<section>
   <h2>Rejoindre Vioxa RP</h2>
   <div class="infos">
     <div class="info">🌍 IP : play.vioxa.org</div>
     <div class="info">🎮 Version : 1.20.6+</div>
-    <div class="info">💬 Discord : <a href="https://discord.gg/Kt34NnyAVX" target="_blank" style="color:#d4af37;">Rejoindre</a></div>
+    <div class="info">💬 Discord : discord.gg/Kt34NnyAVX</div>
   </div>
 </section>
 
@@ -182,7 +205,3 @@
 
 </body>
 </html>
-
-
-
-
