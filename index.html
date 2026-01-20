@@ -1,55 +1,114 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Vioxa RP | Serveur Minecraft</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vioxa RP – Serveur Minecraft Roleplay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #ffffff;
+    }
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 4rem;
+      color: #7cf3ff;
+    }
+    header p {
+      font-size: 1.4rem;
+      margin: 20px 0;
+      max-width: 600px;
+    }
+    .btn {
+      padding: 15px 35px;
+      background: #7cf3ff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      background: #ffffff;
+      transform: scale(1.05);
+    }
+    section {
+      padding: 80px 10%;
+    }
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #7cf3ff;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .card {
+      background: rgba(255,255,255,0.08);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.15);
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: rgba(0,0,0,0.4);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
 
-<header class="navbar">
-    <div class="logo">📘 Vioxa</div>
-    <nav>
-        <a href="#">Accueil</a>
-        <a href="#">Boutique</a>
-        <a href="#">Vote</a>
-        <a href="#">Wiki</a>
-        <a class="login" href="#">Connexion</a>
-    </nav>
+<header>
+  <h1>VIOXA RP</h1>
+  <p>Plonge dans un serveur Minecraft Roleplay unique, immersif et moderne. Crée ton histoire, forge ta destinée.</p>
+  <a href="#rejoindre" class="btn">Rejoindre le serveur</a>
 </header>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>REJOINS L’AVENTURE</h1>
-        <p>Plonge dans un monde Roleplay unique sur Minecraft</p>
-        <a class="btn-play" href="#">▶ Jouer maintenant</a>
-        <span class="online">🟢 3 joueurs connectés</span>
-    </div>
+<section>
+  <h2>🌍 À propos de Vioxa RP</h2>
+  <p>Vioxa RP est un serveur Minecraft Roleplay axé sur l'immersion, la liberté de jeu et une communauté mature. Choisis ton rôle, développe ton personnage et influence le monde.</p>
 </section>
 
-<section class="cards">
-    <div class="card">
-        <h2>🛒 Boutique</h2>
-        <p>Grades, cosmétiques et avantages RP</p>
-        <a href="#" class="btn yellow">Ouvrir</a>
-    </div>
+<section>
+  <h2>⚔️ Fonctionnalités</h2>
+  <div class="cards">
+    <div class="card">🏙️ Ville moderne & zones RP</div>
+    <div class="card">👮 Métiers RP (Police, Mafia, Gouvernement…)</div>
+    <div class="card">📜 Système de lois & économie</div>
+    <div class="card">🎭 Roleplay sérieux & encadré</div>
+    <div class="card">🛠️ Plugins exclusifs</div>
+    <div class="card">🤝 Communauté active</div>
+  </div>
+</section>
 
-    <div class="card">
-        <h2>📩 Voter</h2>
-        <p>Vote chaque jour et gagne des récompenses</p>
-        <a href="#" class="btn green">Voter</a>
-    </div>
-
-    <div class="card">
-        <h2>💬 Discord</h2>
-        <p>Rejoins la communauté Vioxa</p>
-        <a href="#" class="btn blue">Rejoindre</a>
-    </div>
+<section id="rejoindre">
+  <h2>🚀 Rejoindre Vioxa RP</h2>
+  <p><strong>IP :</strong> play.vioxa-rp.fr</p>
+  <p><strong>Version :</strong> 1.20+</p>
+  <p><strong>Discord :</strong> discord.gg/vioxa</p>
 </section>
 
 <footer>
-    <p>© 2026 Vioxa RP — Serveur Minecraft Roleplay</p>
+  © 2026 Vioxa RP – Serveur Minecraft Roleplay | Tous droits réservés
 </footer>
 
 </body>
