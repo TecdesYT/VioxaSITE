@@ -16,7 +16,7 @@
 
     header {
       height: 100vh;
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
         url('https://images.unsplash.com/photo-1604014237744-8c6a1d9c6b0d') center/cover no-repeat;
       display: flex;
       flex-direction: column;
@@ -37,11 +37,11 @@
     header p {
       font-size: 1.4rem;
       margin: 25px 0;
-      max-width: 700px;
+      max-width: 750px;
     }
 
     .btn {
-      padding: 15px 45px;
+      padding: 15px 50px;
       background: linear-gradient(180deg, #d4af37, #8b5a2b);
       color: #1b1208;
       text-decoration: none;
@@ -53,7 +53,7 @@
 
     .btn:hover {
       background: linear-gradient(180deg, #f5e6c8, #d4af37);
-      transform: scale(1.05);
+      transform: scale(1.06);
     }
 
     section {
@@ -70,7 +70,7 @@
     }
 
     section p {
-      max-width: 900px;
+      max-width: 950px;
       margin: auto;
       text-align: center;
       font-size: 1.2rem;
@@ -84,7 +84,7 @@
     }
 
     .card {
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.65);
       padding: 35px;
       border: 3px solid #8b5a2b;
       border-radius: 12px;
@@ -113,7 +113,7 @@
     }
 
     .info {
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.75);
       padding: 25px 45px;
       border: 3px solid #d4af37;
       border-radius: 10px;
@@ -132,46 +132,54 @@
 <body>
 
 <header>
-  <img src="logo.png" alt="Vioxa RP Logo" style="width:140px;margin-bottom:20px;">
   <h1>VIOXA RP</h1>
-  <p>Entrez dans le Monde de Lixar. Un serveur Minecraft Roleplay médiéval ouvert à tous.</p>
-  <a href="#rejoindre" class="btn">Rejoindre le Monde</a>
+  <p>Bienvenue dans le Monde de Lixar, un univers médiéval Minecraft Roleplay ouvert à tous.
+  Aventuriers, marchands, gardes ou hors-la-loi : chaque joueur écrit sa propre légende.</p>
+  <button class="btn" onclick="copyIP()">Rejoindre</button>
 </header>
 
 <section>
   <h2>Le Monde de Lixar</h2>
   <p>
-    Vioxa RP est un serveur Minecraft Roleplay médiéval ouvert à tous, axé sur l’immersion,
-    le jeu de rôle cohérent et une communauté passionnée.
-    Chevaliers, marchands, aventuriers ou hors-la-loi : chacun peut tracer sa propre voie
-    et influencer l’avenir du monde de Lixar.
+    Lixar est un vaste monde médiéval façonné par ses habitants.
+    Conflits, alliances, commerce et intrigues rythment la vie de ses terres.
+    Chaque action a un impact réel sur l’évolution du monde.
   </p>
 </section>
 
 <section>
-  <h2>Chroniques & Systèmes</h2>
+  <h2>Fonctionnalités RP</h2>
   <div class="cards">
-    <div class="card"><span>🏰</span>Monde & cités</div>
-    <div class="card"><span>⚔️</span>Chevaliers & guerres RP</div>
-    <div class="card"><span>👑</span>Dirigeants, nobles & politique</div>
-    <div class="card"><span>📜</span>Lois & justice médiévale</div>
-    <div class="card"><span>💰</span>Économie féodale</div>
-    <div class="card"><span>🧙</span>Métiers & guildes</div>
+    <div class="card"><span>🗺️</span><a href="http://play.vioxa.org:25571/" target="_blank" style="color:#f5e6c8;text-decoration:none;">Dynmap</a></div>
+    <div class="card"><span>⚔️</span>Roleplay médiéval sérieux</div>
+    <div class="card"><span>👥</span>Métiers, factions et conflits</div>
+    <div class="card"><span>📜</span>Lois et justice RP</div>
+    <div class="card"><span>💰</span>Économie médiévale</div>
+    <div class="card"><span>🛡️</span>Staff actif et encadrement RP</div>
   </div>
 </section>
 
 <section id="rejoindre">
-  <h2>Rejoindre le Monde</h2>
+  <h2>Rejoindre Vioxa RP</h2>
   <div class="infos">
     <div class="info">🌍 IP : play.vioxa.org</div>
     <div class="info">🎮 Version : 1.20.6+</div>
-    <div class="info">📯 Discord : <a href="https://discord.gg/Kt34NnyAVX" target="_blank" style="color:#d4af37;">Rejoindre</a></div>
+    <div class="info">💬 Discord : <a href="https://discord.gg/Kt34NnyAVX" target="_blank" style="color:#d4af37;">Rejoindre</a></div>
   </div>
 </section>
 
 <footer>
   © 2026 Vioxa RP — Monde de Lixar
 </footer>
+
+<script>
+  function copyIP() {
+    const ip = 'play.vioxa.org';
+    navigator.clipboard.writeText(ip).then(() => {
+      alert('IP copiée : ' + ip);
+    });
+  }
+</script>
 
 </body>
 </html>
