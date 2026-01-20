@@ -2,86 +2,70 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>Serveur Minecraft RP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Serveur Minecraft Roleplay</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="header">
-    <nav class="nav">
-        <a href="#" class="logo">MonServeurRP</a>
-        <ul class="menu">
-            <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#boutique">Boutique</a></li>
-            <li><a href="#vote">Vote</a></li>
-            <li><a href="#guide">Guide</a></li>
-        </ul>
-        <a href="https://discord.gg/TONDISCORD" class="btn-discord" target="_blank">Discord</a> 
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="nav-left">
+        📘
+    </div>
+    <nav class="nav-center">
+        <a href="#">🏠 ACCUEIL</a>
+        <a href="#">🛒 BOUTIQUE</a>
+        <a href="#">✉️ VOTE</a>
+        <a href="#">📖 WIKI</a>
     </nav>
+    <div class="nav-right">
+        <a class="login-btn" href="#">CONNEXION</a>
+    </div>
 </header>
 
-<section id="accueil" class="hero">
-    <h1>Rejoins l’aventure Roleplay!</h1>
-    <p>Plonge dans un monde unique avec quêtes, métiers, économie & events réguliers.</p>
-    <a href="#guide" class="btn-play">Jouer maintenant</a>
-    <div class="stats">
-        <span>🔥 IP : play.myrpserveur.fr</span>
-        <span>🧍‍♂️ Joueurs en ligne : 0</span>
-    </div>
-</section>
+<!-- MAIN -->
+<main class="container">
 
-<section id="features" class="features">
-    <div class="box">
-        <h3>Quêtes immersives</h3>
-        <p>Une histoire riche avec aventures et objectifs.</p>
-    </div>
-    <div class="box">
-        <h3>Économie & métiers</h3>
-        <p>Gagne ta vie, choisis ton métier et monte en grade.</p>
-    </div>
-    <div class="box">
-        <h3>Events réguliers</h3>
-        <p>Des événements pour toute la communauté.</p>
-    </div>
-</section>
+    <!-- BOUTIQUE CARD -->
+    <section class="card boutique">
+        <div class="icon yellow">🛒</div>
+        <h2>BOUTIQUE</h2>
+        <p>Gemmes, cosmétiques et passe</p>
+        <a class="btn yellow" href="#">OUVRIR</a>
+    </section>
 
-<section id="guide" class="guide">
-    <h2>Guide de connexion</h2>
-    <div class="steps">
-        <div class="step">
-            <h4>📌 Minecraft Java</h4>
-            <ol>
-                <li>Lance Minecraft en version 1.21+</li>
-                <li>Multijoueur → Nouveau serveur</li>
-                <li>Nom : MonServeurRP</li>
-                <li>IP : <strong>play.myrpserveur.fr</strong></li>
-            </ol>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>REJOINS L’AVENTURE</h1>
+            <p>Plonge dans un monde RPG unique en 1.21</p>
+            <a class="btn play" href="#">▶ JOUER MAINTENANT</a>
+            <span class="online">🟢 3 joueurs connectés</span>
         </div>
-        <div class="step">
-            <h4>📌 Minecraft Bedrock</h4>
-            <ol>
-                <li>Version Bedrock (Windows/Phone/Console)</li>
-                <li>Serveurs → Ajouter serveur</li>
-                <li>IP : <strong>play.myrpserveur.fr</strong></li>
-                <li>Port : <strong>25565</strong></li>
-            </ol>
+    </section>
+
+</main>
+
+<!-- FOOTER CARDS -->
+<footer class="bottom">
+    <div class="bottom-card">
+        <div class="icon green">✉️</div>
+        <div>
+            <h3>VOTER</h3>
+            <p>Gagne des récompenses</p>
         </div>
+        <a class="btn green" href="#">VOTER</a>
     </div>
-</section>
 
-<section id="boutique" class="boutique">
-    <h2>Boutique</h2>
-    <p><a href="https://boutique.myrpserveur.fr" target="_blank">Visiter la boutique</a></p>
-</section>
-
-<section id="vote" class="vote">
-    <h2>Vote pour nous</h2>
-    <p><a href="https://serveurlist.myrpserveur.fr/vote" target="_blank">Voter et obtenir des récompenses</a></p>
-</section>
-
-<footer class="footer">
-    <p>© 2026 - MonServeurRP. Tous droits réservés.</p>
+    <div class="bottom-card">
+        <div class="icon blue">💬</div>
+        <div>
+            <h3>DISCORD</h3>
+            <p>Rejoins la communauté</p>
+        </div>
+        <a class="btn blue" href="#">REJOINDRE</a>
+    </div>
 </footer>
 
 </body>
