@@ -71,27 +71,11 @@
       color: #d4af37;
     }
 
-    .categories {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      margin-bottom: 60px;
-      flex-wrap: wrap;
-    }
-
-    .category {
-      padding: 12px 30px;
-      border: 2px solid #d4af37;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      background: rgba(0,0,0,0.6);
-    }
-
     .packs {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 40px;
+      margin-bottom: 80px;
     }
 
     .pack {
@@ -103,23 +87,10 @@
       box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
     }
 
-    .pack h3 {
-      font-family: 'MedievalSharp', cursive;
-      font-size: 2.2rem;
-      color: #c0c0c0;
-      margin-bottom: 15px;
-    }
-
-    .price {
-      font-size: 1.4rem;
-      margin: 20px 0;
-      color: #d4af37;
-    }
-
-    ul {
-      list-style: none;
-      margin: 25px 0;
-      line-height: 1.8;
+    .pack span {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 20px;
     }
 
     footer {
@@ -135,39 +106,36 @@
 
 <header>
   <h1>BOUTIQUE</h1>
-  <p>Soutenez le serveur Vioxa RP et obtenez des avantages exclusifs en jeu.</p>
+  <p>Soutenez Vioxa RP et débloquez des avantages en jeu.</p>
   <button class="btn" onclick="copyIP()">Rejoindre</button>
 </header>
 
 <section>
-  <h2>Catégories</h2>
 
-  <div class="categories">
-    <div class="category">Grades</div>
-    <div class="category">Cosmétiques</div>
-    <div class="category">Avantages RP</div>
-  </div>
-
-  <h2>Pack – Grade Argent</h2>
-
+  <!-- CATÉGORIE GRADES -->
+  <h2>Grades</h2>
   <div class="packs">
-
-    <div class="pack">
-      <h3>⚔️ Grade Argent</h3>
-
-      <div class="price">9,99 €</div>
-
-      <ul>
-        <li>✔️ Grade Argent en jeu</li>
-        <li>✔️ Préfixe RP Argent</li>
-        <li>✔️ Commandes cosmétiques</li>
-        <li>✔️ Soutien au serveur</li>
-      </ul>
-
-      <button class="btn">Acheter</button>
-    </div>
-
+    <div class="pack"><span>👑</span></div>
+    <div class="pack"><span>👑</span></div>
+    <div class="pack"><span>👑</span></div>
   </div>
+
+  <!-- CATÉGORIE ARGENT -->
+  <h2>Argent</h2>
+  <div class="packs">
+    <div class="pack"><span>💰</span></div>
+    <div class="pack"><span>💰</span></div>
+    <div class="pack"><span>💰</span></div>
+  </div>
+
+  <!-- CATÉGORIE PACKS -->
+  <h2>Packs</h2>
+  <div class="packs">
+    <div class="pack"><span>📦</span></div>
+    <div class="pack"><span>📦</span></div>
+    <div class="pack"><span>📦</span></div>
+  </div>
+
 </section>
 
 <footer>
