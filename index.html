@@ -2,200 +2,191 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vioxa RP – Monde de Lixar</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;600;800&display=swap" rel="stylesheet">
-
+  <title>MiniTube – Interface YouTube-like</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Cinzel', serif;
-      background: #1b1208;
-      color: #f5e6c8;
+      margin: 0;
+      font-family: Roboto, Arial, sans-serif;
+      background: #0f0f0f;
+      color: #fff;
     }
 
+    /* HEADER */
     header {
-      height: 100vh;
-      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
-        url('https://images.unsplash.com/photo-1604014237744-8c6a1d9c6b0d') center/cover no-repeat;
+      height: 56px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
-      border-bottom: 6px solid #8b5a2b;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: #181818;
+      border-bottom: 1px solid #303030;
     }
 
-    header h1 {
-      font-family: 'MedievalSharp', cursive;
-      font-size: 4.5rem;
-      color: #d4af37;
-      text-shadow: 0 0 15px rgba(212,175,55,0.6);
-      letter-spacing: 4px;
-    }
-
-    header p {
-      font-size: 1.4rem;
-      margin: 25px 0;
-      max-width: 750px;
-    }
-
-    .btn {
-      padding: 15px 50px;
-      background: linear-gradient(180deg, #d4af37, #8b5a2b);
-      color: #1b1208;
-      border-radius: 8px;
+    .logo {
+      font-size: 20px;
       font-weight: bold;
-      border: 2px solid #f5e6c8;
+      color: #ff0000;
+    }
+
+    .search {
+      flex: 1;
+      margin: 0 20px;
+      display: flex;
+    }
+
+    .search input {
+      flex: 1;
+      padding: 8px;
+      background: #121212;
+      border: 1px solid #303030;
+      color: #fff;
+    }
+
+    .search button {
+      padding: 8px 16px;
+      background: #303030;
+      border: none;
+      color: #fff;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    .btn:hover {
-      background: linear-gradient(180deg, #f5e6c8, #d4af37);
-      transform: scale(1.06);
-    }
-
-    section {
-      padding: 90px 12%;
-      background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
-    }
-
-    h2 {
-      font-family: 'MedievalSharp', cursive;
-      font-size: 3rem;
-      margin-bottom: 30px;
-      text-align: center;
-      color: #d4af37;
-    }
-
-    .cards {
+    /* LAYOUT */
+    .layout {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 40px;
-      margin-top: 60px;
+      grid-template-columns: 240px 1fr;
+      height: calc(100vh - 56px);
+    }
+
+    /* SIDEBAR */
+    aside {
+      background: #181818;
+      padding: 12px;
+      border-right: 1px solid #303030;
+    }
+
+    aside h3 {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    aside button {
+      width: 100%;
+      padding: 8px;
+      background: #303030;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    /* MAIN */
+    main {
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    video {
+      width: 100%;
+      max-height: 60vh;
+      background: black;
+      border-radius: 8px;
+    }
+
+    .video-title {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    /* VIDEO LIST */
+    .video-list {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
     }
 
     .card {
-      background: rgba(0,0,0,0.65);
-      padding: 35px;
-      border: 3px solid #8b5a2b;
-      border-radius: 12px;
-      text-align: center;
-      transition: 0.3s;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-      text-decoration: none;
-      color: #f5e6c8;
+      cursor: pointer;
     }
 
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 0 30px rgba(212,175,55,0.4);
+    .thumb {
+      width: 100%;
+      height: 120px;
+      background: #333;
+      border-radius: 8px;
+      margin-bottom: 6px;
     }
 
-    .card span {
-      font-size: 2.5rem;
-      display: block;
-      margin-bottom: 15px;
+    .card-title {
+      font-size: 14px;
     }
 
-    .infos {
-      margin-top: 50px;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .info {
-      background: rgba(0,0,0,0.75);
-      padding: 25px 45px;
-      border: 3px solid #d4af37;
-      border-radius: 10px;
-      font-size: 1.1rem;
-      text-align: center;
-    }
-
-    .info a {
-      color: #f5e6c8;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .info a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      background: #0f0803;
-      text-align: center;
-      padding: 30px;
-      border-top: 6px solid #8b5a2b;
-      font-size: 0.9rem;
-    }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>VIOXA RP</h1>
-  <p>Bienvenue dans le Monde de Lixar, un univers Minecraft Roleplay médiéval ouvert à tous.</p>
-  <button class="btn" onclick="copyIP()">Rejoindre</button>
+  <div class="logo">MiniTube</div>
+  <div class="search">
+    <input type="text" placeholder="Rechercher" />
+    <button>🔍</button>
+  </div>
+  <div>👤</div>
 </header>
 
-<section>
-  <h2>Fonctionnalités RP</h2>
+<div class="layout">
+  <aside>
+    <h3>MENU</h3>
+    <button>🏠 Accueil</button>
+    <button>🔥 Tendances</button>
+    <button>📺 Abonnements</button>
+    <input type="file" accept="video/*" id="upload" />
+  </aside>
 
-  <div class="cards">
-    <a class="card" href="http://play.vioxa.org:25571/" target="_blank">
-      <span>🗺️</span>Dynmap
-    </a>
+  <main>
+    <video id="player" controls></video>
+    <div class="video-title" id="title">Sélectionne une vidéo</div>
 
-    <a class="card" href="https://bit.ly/vioxacandidature" target="_blank">
-      <span>⚔️</span>Devenir Staff
-    </a>
-
-    <div class="card">
-      <span>👥</span>Métiers
-    </div>
-
-    <a class="card" href="lois.html">
-      <span>📜</span>Lois et justice RP
-    </a>
-
-    <a class="card" href="boutique.html">
-      <span>💰</span>Boutique
-    </a>
-
-    <a class="card" href="https://discord.gg/Kt34NnyAVX" target="_blank">
-      <span>🛡️</span>Support
-    </a>
-  </div>
-</section>
-
-<section>
-  <h2>Rejoindre Vioxa RP</h2>
-
-  <div class="infos">
-    <div class="info">🎮 Version : <strong>1.20.6+</strong></div>
-    <div class="info">🌍 IP : <strong>play.vioxa.org</strong></div>
-    <div class="info">
-      💬 <a href="https://discord.gg/Kt34NnyAVX" target="_blank">Rejoindre le Discord</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  © 2026 Vioxa RP — Monde de Lixar
-</footer>
+    <div class="video-list" id="videoList"></div>
+  </main>
+</div>
 
 <script>
-  function copyIP() {
-    navigator.clipboard.writeText('play.vioxa.org')
-      .then(() => alert('IP copiée : play.vioxa.org'));
-  }
+  const upload = document.getElementById('upload');
+  const videoList = document.getElementById('videoList');
+  const player = document.getElementById('player');
+  const title = document.getElementById('title');
+
+  upload.addEventListener('change', () => {
+    const file = upload.files[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const thumb = document.createElement('div');
+    thumb.className = 'thumb';
+
+    const name = document.createElement('div');
+    name.className = 'card-title';
+    name.textContent = file.name;
+
+    card.appendChild(thumb);
+    card.appendChild(name);
+
+    card.onclick = () => {
+      player.src = url;
+      title.textContent = file.name;
+      player.play();
+    };
+
+    videoList.prepend(card);
+  });
 </script>
 
 </body>
