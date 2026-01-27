@@ -28,7 +28,7 @@ video{width:100%;max-height:70vh;border-radius:12px}
 <body>
 
 <header>
-  <div class="logo">TUBEX</div>
+  <div class="logo">Tubex</div>
   <input id="search" placeholder="Rechercher une chaîne" />
   <button onclick="searchChannel()">🔍</button>
   <div style="margin-left:auto">
@@ -80,7 +80,7 @@ function toggleMenu(){
 }
 
 function login(){
-  const name = prompt("Nom du compte Tubex");
+  const name = prompt("Nom du compte MiniTube");
   if(!name) return;
   fetch(`${API}/users`,{
     method:"POST",
@@ -105,18 +105,28 @@ function renderHome(){
   view.innerHTML="<h2>Recherchez une chaîne pour commencer</h2>";
 }
 
-// ===== SEARCH (BACKEND) =====
-function searchChannel(){
-  const q=document.getElementById('search').value.trim();
-  if(!q) return;
+// ===== SEARCH (SMART SEARCH) =====
+function normalize(str){
+  return str.toLowerCase().replace(/[^a-z]/g, "");
+}
 
-  fetch(`${API}/users/${q}`)
-    .then(res=>{
-      if(!res.ok) throw new Error();
-      return res.json();
+function searchChannel(){
+  const input = document.getElementById('search').value.trim();
+  if(!input) return;
+  const query = normalize(input);
+
+  fetch(`${API}/users`)
+    .then(res => res.json())
+    .then(users => {
+      const found = users.find(u => normalize(u.name).includes(query));
+      if(!found){
+        alert('Chaîne introuvable');
+        return;
+      }
+      showChannel(found);
     })
-    .then(user=>showChannel(user))
-    .catch(()=>alert("Chaîne introuvable"));
+    .catch(()=>alert('Erreur serveur'));
+}(()=>alert("Chaîne introuvable"));
 }
 
 // ===== CHANNEL PAGE =====
@@ -181,4 +191,3 @@ function sendComment(id){
 </script>
 </body>
 </html>
-
