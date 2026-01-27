@@ -2,189 +2,122 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<title>MiniTube – Interface YouTube Home</title>
+<title>MiniTube – Chaîne utilisateur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Roboto,Arial,sans-serif;background:#f9f9f9;color:#0f0f0f}
-
-/* HEADER */
 header{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;gap:16px;padding:0 16px;background:#fff;border-bottom:1px solid #ddd;z-index:10}
 .logo{font-weight:700;font-size:20px;color:#ff0000}
 header input{flex:1;max-width:600px;padding:8px;border:1px solid #ccc;border-radius:2px}
 header button{padding:8px 12px;border:1px solid #ccc;background:#f0f0f0;cursor:pointer}
-
-/* LAYOUT */
 .container{display:flex;margin-top:56px}
-
-/* SIDEBAR */
 aside{width:220px;padding:12px;border-right:1px solid #ddd;background:#fff}
 .aside-item{padding:10px;border-radius:8px;cursor:pointer}
-.aside-item:hover{background:#eee}
-
-/* MAIN */
-main{flex:1;padding:24px}
-
-/* FILTERS */
-.filters{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto}
-.filter{padding:6px 12px;background:#eee;border-radius:16px;font-size:14px;cursor:pointer;white-space:nowrap}
-.filter.active{background:#0f0f0f;color:white}
-
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-.card{cursor:pointer}
-.thumb{width:100%;height:170px;background:#ccc;border-radius:12px}
-.card h3{margin:8px 0 4px;font-size:16px}
-.card p{margin:0;color:#555;font-size:14px}
-
-/* CHANNEL PAGE */
-.channel-head{display:flex;gap:16px;align-items:center;margin-bottom:20px}
-.avatar{width:80px;height:80px;border-radius:50%;background:#ccc}
-
-/* VIDEO PAGE */
-video{width:100%;max-height:70vh;border-radius:12px;background:black}
-textarea{width:100%;padding:8px}
+aside .aside-item:hover{background:#eee}
+main{flex:1;padding:0}
+.banner{height:200px;background:#ddd}
+.channel-header{display:flex;gap:16px;padding:24px;align-items:center}
+.channel-avatar{width:80px;height:80px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:bold}
+.channel-meta h2{margin:0}
+.tabs{display:flex;gap:24px;padding:0 24px;border-bottom:1px solid #ddd}
+.tab{padding:12px 0;cursor:pointer}
+.tab.active{border-bottom:2px solid #000;font-weight:bold}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px;color:#555}
+.empty button{margin-top:20px;padding:10px 18px;border-radius:20px;border:none;background:#000;color:#fff;cursor:pointer}
+.menu{position:absolute;top:56px;right:16px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.2);width:260px;display:none;z-index:20}
+.menu-item{padding:12px;cursor:pointer}
+.menu-item:hover{background:#eee}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo">MiniTube</div>
-  <input id="search" placeholder="Rechercher" />
-  <button onclick="searchChannel()">🔍</button>
-
+  <input placeholder="Rechercher" />
+  <button>🔍</button>
   <div style="margin-left:auto;display:flex;align-items:center;gap:12px;position:relative">
-    <button id="createBtn" style="padding:8px 12px;border-radius:18px;border:1px solid #ccc;background:#fff;cursor:pointer" onclick="openCreate()">➕ Créer</button>
-    <button id="loginBtn" style="padding:8px 12px;border-radius:18px;border:1px solid #065fd4;background:#065fd4;color:white;cursor:pointer" onclick="login()">Se connecter</button>
-    <div id="profile" style="display:none;width:32px;height:32px;border-radius:50%;background:#ccc;align-items:center;justify-content:center;font-weight:bold;cursor:pointer" onclick="toggleMenu()"></div>
-
-    <div id="menu" style="display:none;position:absolute;top:56px;right:0;background:#fff;color:#000;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.2);width:260px;overflow:hidden;z-index:20">
-      <div style="padding:16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #ddd">
-        <div id="menuAvatar" style="width:40px;height:40px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-weight:bold"></div>
-        <div>
-          <strong id="menuName"></strong><br>
-          <span style="color:#065fd4;cursor:pointer">Afficher votre chaîne</span>
-        </div>
-      </div>
-      <div style="padding:12px;cursor:pointer">Compte MiniTube</div>
-      <div style="padding:12px;cursor:pointer">Changer de compte</div>
-      <div style="padding:12px;cursor:pointer" onclick="logout()">Se déconnecter</div>
+    <button id="loginBtn" onclick="login()">Se connecter</button>
+    <div id="profile" onclick="toggleMenu()" style="display:none;width:32px;height:32px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-weight:bold;cursor:pointer"></div>
+    <div id="menu" class="menu">
+      <div style="padding:16px;border-bottom:1px solid #ddd"><strong id="menuName"></strong><br><span style="color:#065fd4;cursor:pointer" onclick="openMyChannel()">Afficher votre chaîne</span></div>
+      <div class="menu-item">Compte MiniTube</div>
+      <div class="menu-item" onclick="logout()">Se déconnecter</div>
     </div>
   </div>
 </header>
-
 <div class="container">
 <aside>
   <div class="aside-item">🏠 Accueil</div>
-  <div class="aside-item">🎬 Shorts</div>
   <div class="aside-item">📺 Abonnements</div>
 </aside>
-
-<main>
-  <div class="filters">
-    <div class="filter active">Tous</div>
-    <div class="filter">Musique</div>
-    <div class="filter">Jeux vidéo</div>
-    <div class="filter">Podcasts</div>
-    <div class="filter">Cuisine</div>
-  </div>
-
-  <div id="view"></div>
-</main>
+<main id="view"></main>
 </div>
-
 <script>
-let data = JSON.parse(localStorage.getItem('data') || '{}');
-let view = document.getElementById('view');
 let currentUser = localStorage.getItem('currentUser');
-
 updateHeader();
-renderHome();
 
 function updateHeader(){
-  const loginBtn = document.getElementById('loginBtn');
-  const profile = document.getElementById('profile');
-  const menuName = document.getElementById('menuName');
-  const menuAvatar = document.getElementById('menuAvatar');
-
+  const loginBtn=document.getElementById('loginBtn');
+  const profile=document.getElementById('profile');
+  const menuName=document.getElementById('menuName');
   if(currentUser){
-    loginBtn.style.display = 'none';
-    profile.style.display = 'flex';
-    profile.textContent = currentUser[0].toUpperCase();
-    menuName.textContent = currentUser;
-    menuAvatar.textContent = currentUser[0].toUpperCase();
+    loginBtn.style.display='none';
+    profile.style.display='flex';
+    profile.textContent=currentUser[0].toUpperCase();
+    menuName.textContent=currentUser;
   } else {
-    loginBtn.style.display = 'block';
-    profile.style.display = 'none';
-    document.getElementById('menu').style.display = 'none';
+    loginBtn.style.display='block';
+    profile.style.display='none';
   }
 }
 
 function login(){
-  const name = prompt('Nom du compte MiniTube');
+  const name=prompt('Nom du compte MiniTube');
   if(!name) return;
-  currentUser = name;
-  localStorage.setItem('currentUser', name);
+  currentUser=name;
+  localStorage.setItem('currentUser',name);
   updateHeader();
 }
 
 function toggleMenu(){
-  const menu = document.getElementById('menu');
-  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+  const m=document.getElementById('menu');
+  m.style.display=m.style.display==='block'?'none':'block';
 }
 
 function logout(){
-  currentUser = null;
+  currentUser=null;
   localStorage.removeItem('currentUser');
+  document.getElementById('menu').style.display='none';
   updateHeader();
 }
 
-function openCreate(){
-  if(!currentUser) return alert('Connecte-toi pour créer');
-  alert('Créer : Upload vidéo / Live / Post (à venir)');
+function openMyChannel(){
+  document.getElementById('menu').style.display='none';
+  renderMyChannel();
 }
 
-function renderHome(){
-  let videos = [];
-  Object.keys(data).forEach(c => {
-    if(data[c].videos){
-      data[c].videos.forEach(v => videos.push({...v, channel: c}));
-    }
-  });
-
-  view.innerHTML = `<div class='grid'>${videos.map((v,i)=>`
-    <div class='card' onclick="openVideo('${v.channel}',${i})">
-      <div class='thumb'></div>
-      <h3>${v.title}</h3>
-      <p>${v.channel}</p>
-    </div>`).join('')}
-  </div>`;
-}
-
-function searchChannel(){
-  const q = search.value.trim();
-  if(!data[q]) return alert('Chaîne introuvable');
-  const c = data[q];
-
-  view.innerHTML = `
-    <div class='channel-head'>
-      <div class='avatar'></div>
-      <div><h2>${q}</h2><p>${c.videos?.length || 0} vidéos</p></div>
+function renderMyChannel(){
+  const v=document.getElementById('view');
+  v.innerHTML=`
+    <div class="banner"></div>
+    <div class="channel-header">
+      <div class="channel-avatar">${currentUser[0].toUpperCase()}</div>
+      <div class="channel-meta">
+        <h2>${currentUser}</h2>
+        <p>@${currentUser.toLowerCase()} · 0 abonnés</p>
+        <button>Personnaliser la chaîne</button>
+        <button>Gérer les vidéos</button>
+      </div>
     </div>
-    <div class='grid'>${(c.videos||[]).map((v,i)=>`
-      <div class='card' onclick="openVideo('${q}',${i})">
-        <div class='thumb'></div>
-        <h3>${v.title}</h3>
-      </div>`).join('')}
+    <div class="tabs">
+      <div class="tab active">Accueil</div>
+      <div class="tab">Playlists</div>
+      <div class="tab">Posts</div>
+    </div>
+    <div class="empty">
+      <p>Créez des contenus sur n'importe quel appareil</p>
+      <button>Créer</button>
     </div>`;
-}
-
-function openVideo(c,i){
-  const v = data[c].videos[i];
-  view.innerHTML = `
-    <video controls src='${v.url}'></video>
-    <h2>${v.title}</h2>
-    <p>${c}</p>`;
 }
 </script>
 </body>
