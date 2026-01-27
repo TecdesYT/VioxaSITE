@@ -50,9 +50,15 @@ textarea{width:100%;padding:8px}
 <body>
 
 <header>
-<div class="logo">MiniTube</div>
-<input id="search" placeholder="Rechercher" />
-<button onclick="searchChannel()">🔍</button>
+  <div class="logo">MiniTube</div>
+  <input id="search" placeholder="Rechercher" />
+  <button onclick="searchChannel()">🔍</button>
+
+  <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+    <button id="createBtn" style="padding:8px 12px;border-radius:18px;border:1px solid #ccc;background:#fff;cursor:pointer" onclick="openCreate()">➕ Créer</button>
+    <button id="loginBtn" style="padding:8px 12px;border-radius:18px;border:1px solid #065fd4;background:#065fd4;color:white;cursor:pointer" onclick="login()">Se connecter</button>
+    <div id="profile" style="display:none;width:32px;height:32px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-weight:bold"></div>
+  </div>
 </header>
 
 <div class="container">
@@ -73,13 +79,38 @@ textarea{width:100%;padding:8px}
 
 <div id="view"></div>
 </main>
-</div>
-
-<script>
-let data = JSON.parse(localStorage.getItem('data')||'{}');
-let view=document.getElementById('view');
+</di = JSON.parse(localStorage.getItem('data')||'{}');
+let viewrentUser = localStorage.getItem('currentUser');
+updateHeader();
 
 renderHome();
+
+function updateHeader(){
+  const loginBtn=documenoginBtn');
+  const profile=document.getElementById('profile');
+  if(currentUser){
+    loginBtn.style.display='none';
+    profile.style.display='flex';
+    profile.textContent=currentUser[0].toUpperCase();
+  }else{
+    loginBtn.style.display='block';
+    profile.style.display='none';
+  }
+}
+
+function login(){
+  const name=prompt('Nom de la chaîne');
+  if(!name) return;
+  if(!data[name]) data[name]={subs:[],videos:[]};
+  currentUser=name;
+  localStorage.setItem('currentUser',name);
+  updateHeader();
+}
+
+function openCreate(){
+  if(!currentUser) return alert('Connecte-toi pour créer');
+  alert('Zone création (upload / live / post)');
+}
 
 function renderHome(){
  let videos=[];
