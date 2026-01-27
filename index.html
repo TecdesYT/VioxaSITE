@@ -2,192 +2,120 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>MiniTube – Interface YouTube-like</title>
+  <title>MiniTube – Comptes & Chaînes (local)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Roboto, Arial, sans-serif;
-      background: #0f0f0f;
-      color: #fff;
-    }
-
-    /* HEADER */
-    header {
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      background: #181818;
-      border-bottom: 1px solid #303030;
-    }
-
-    .logo {
-      font-size: 20px;
-      font-weight: bold;
-      color: #ff0000;
-    }
-
-    .search {
-      flex: 1;
-      margin: 0 20px;
-      display: flex;
-    }
-
-    .search input {
-      flex: 1;
-      padding: 8px;
-      background: #121212;
-      border: 1px solid #303030;
-      color: #fff;
-    }
-
-    .search button {
-      padding: 8px 16px;
-      background: #303030;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    /* LAYOUT */
-    .layout {
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      height: calc(100vh - 56px);
-    }
-
-    /* SIDEBAR */
-    aside {
-      background: #181818;
-      padding: 12px;
-      border-right: 1px solid #303030;
-    }
-
-    aside h3 {
-      font-size: 14px;
-      color: #aaa;
-      margin-bottom: 10px;
-    }
-
-    aside button {
-      width: 100%;
-      padding: 8px;
-      background: #303030;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      margin-bottom: 10px;
-    }
-
-    /* MAIN */
-    main {
-      padding: 16px;
-      overflow-y: auto;
-    }
-
-    video {
-      width: 100%;
-      max-height: 60vh;
-      background: black;
-      border-radius: 8px;
-    }
-
-    .video-title {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-
-    /* VIDEO LIST */
-    .video-list {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      cursor: pointer;
-    }
-
-    .thumb {
-      width: 100%;
-      height: 120px;
-      background: #333;
-      border-radius: 8px;
-      margin-bottom: 6px;
-    }
-
-    .card-title {
-      font-size: 14px;
-    }
-
+    body { margin:0; font-family: Roboto, Arial, sans-serif; background:#0f0f0f; color:#fff; }
+    header { height:56px; display:flex; align-items:center; gap:12px; padding:0 16px; background:#181818; border-bottom:1px solid #303030; }
+    header input { flex:1; padding:8px; background:#121212; border:1px solid #303030; color:#fff; }
+    header button { padding:8px 12px; background:#303030; border:none; color:#fff; cursor:pointer; }
+    .layout { display:grid; grid-template-columns:240px 1fr; height:calc(100vh - 56px); }
+    aside { background:#181818; padding:12px; border-right:1px solid #303030; }
+    main { padding:16px; overflow-y:auto; }
+    .card { background:#181818; padding:12px; border-radius:8px; margin-bottom:12px; }
+    .btn { padding:6px 10px; background:#cc0000; border:none; color:white; cursor:pointer; border-radius:4px; }
+    .btn.gray { background:#303030; }
+    textarea { width:100%; background:#121212; color:white; border:1px solid #303030; padding:6px; }
   </style>
 </head>
 <body>
-
 <header>
-  <div class="logo">MiniTube</div>
-  <div class="search">
-    <input type="text" placeholder="Rechercher" />
-    <button>🔍</button>
-  </div>
-  <div>👤</div>
+  <strong>MiniTube</strong>
+  <input id="search" placeholder="Rechercher une chaîne" />
+  <button onclick="searchChannel()">🔍</button>
 </header>
 
 <div class="layout">
   <aside>
-    <h3>MENU</h3>
-    <button>🏠 Accueil</button>
-    <button>🔥 Tendances</button>
-    <button>📺 Abonnements</button>
-    <input type="file" accept="video/*" id="upload" />
+    <div class="card">
+      <h3>Créer un compte</h3>
+      <input id="username" placeholder="Nom de la chaîne" />
+      <button class="btn" onclick="createAccount()">Créer</button>
+    </div>
+    <div class="card" id="currentUser"></div>
   </aside>
 
   <main>
-    <video id="player" controls></video>
-    <div class="video-title" id="title">Sélectionne une vidéo</div>
-
-    <div class="video-list" id="videoList"></div>
+    <div id="channelView"></div>
+    <div id="comments"></div>
   </main>
 </div>
 
 <script>
-  const upload = document.getElementById('upload');
-  const videoList = document.getElementById('videoList');
-  const player = document.getElementById('player');
-  const title = document.getElementById('title');
+  let users = JSON.parse(localStorage.getItem('users') || '{}');
+  let currentUser = localStorage.getItem('currentUser');
 
-  upload.addEventListener('change', () => {
-    const file = upload.files[0];
-    if (!file) return;
+  function save() {
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', currentUser);
+  }
 
-    const url = URL.createObjectURL(file);
+  function createAccount() {
+    const name = username.value.trim();
+    if (!name || users[name]) return alert('Nom invalide ou déjà pris');
+    users[name] = { subs: [], comments: [] };
+    currentUser = name;
+    save();
+    renderCurrent();
+  }
 
-    const card = document.createElement('div');
-    card.className = 'card';
+  function renderCurrent() {
+    currentUserDiv.innerHTML = currentUser
+      ? `<p>Connecté : <b>${currentUser}</b></p>`
+      : '<p>Non connecté</p>';
+  }
 
-    const thumb = document.createElement('div');
-    thumb.className = 'thumb';
+  function searchChannel() {
+    const q = search.value.trim();
+    if (!users[q]) return alert('Chaîne introuvable');
 
-    const name = document.createElement('div');
-    name.className = 'card-title';
-    name.textContent = file.name;
+    const subscribed = currentUser && users[q].subs.includes(currentUser);
 
-    card.appendChild(thumb);
-    card.appendChild(name);
+    channelView.innerHTML = `
+      <div class="card">
+        <h2>${q}</h2>
+        <p>${users[q].subs.length} abonnés</p>
+        ${currentUser && currentUser !== q ?
+          `<button class="btn ${subscribed ? 'gray' : ''}" onclick="toggleSub('${q}')">
+            ${subscribed ? 'Se désabonner' : 'S\'abonner'}
+          </button>` : ''}
+      </div>
+    `;
 
-    card.onclick = () => {
-      player.src = url;
-      title.textContent = file.name;
-      player.play();
-    };
+    renderComments(q);
+  }
 
-    videoList.prepend(card);
-  });
+  function toggleSub(channel) {
+    const subs = users[channel].subs;
+    if (subs.includes(currentUser))
+      users[channel].subs = subs.filter(s => s !== currentUser);
+    else subs.push(currentUser);
+    save();
+    searchChannel();
+  }
+
+  function renderComments(channel) {
+    comments.innerHTML = `
+      <div class="card">
+        <h3>Commentaires</h3>
+        ${currentUser ? `<textarea id="commentText"></textarea>
+        <button class="btn" onclick="addComment('${channel}')">Commenter</button>` : '<p>Connecte-toi pour commenter</p>'}
+        <div>${users[channel].comments.map(c => `<p><b>${c.user}</b> : ${c.text}</p>`).join('')}</div>
+      </div>
+    `;
+  }
+
+  function addComment(channel) {
+    const text = commentText.value.trim();
+    if (!text) return;
+    users[channel].comments.unshift({ user: currentUser, text });
+    save();
+    renderComments(channel);
+  }
+
+  const currentUserDiv = document.getElementById('currentUser');
+  renderCurrent();
 </script>
-
 </body>
 </html>
