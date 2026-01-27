@@ -2,59 +2,62 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<title>MiniTube – Chaîne utilisateur</title>
+<title>MiniTube</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Roboto,Arial,sans-serif;background:#f9f9f9;color:#0f0f0f}
-header{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;gap:16px;padding:0 16px;background:#fff;border-bottom:1px solid #ddd;z-index:10}
-.logo{font-weight:700;font-size:20px;color:#ff0000}
-header input{flex:1;max-width:600px;padding:8px;border:1px solid #ccc;border-radius:2px}
-header button{padding:8px 12px;border:1px solid #ccc;background:#f0f0f0;cursor:pointer}
+body{margin:0;font-family:Roboto,Arial,sans-serif;background:#f9f9f9}
+header{height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;background:#fff;border-bottom:1px solid #ddd;position:fixed;top:0;left:0;right:0}
+.logo{color:#ff0000;font-weight:700;font-size:20px}
+header input{flex:1;max-width:600px;padding:8px}
+header button{padding:8px 12px;cursor:pointer}
 .container{display:flex;margin-top:56px}
-aside{width:220px;padding:12px;border-right:1px solid #ddd;background:#fff}
+aside{width:220px;padding:12px;background:#fff;border-right:1px solid #ddd}
 .aside-item{padding:10px;border-radius:8px;cursor:pointer}
-aside .aside-item:hover{background:#eee}
-main{flex:1;padding:0}
-.banner{height:200px;background:#ddd}
-.channel-header{display:flex;gap:16px;padding:24px;align-items:center}
-.channel-avatar{width:80px;height:80px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:bold}
-.channel-meta h2{margin:0}
-.tabs{display:flex;gap:24px;padding:0 24px;border-bottom:1px solid #ddd}
-.tab{padding:12px 0;cursor:pointer}
-.tab.active{border-bottom:2px solid #000;font-weight:bold}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px;color:#555}
-.empty button{margin-top:20px;padding:10px 18px;border-radius:20px;border:none;background:#000;color:#fff;cursor:pointer}
-.menu{position:absolute;top:56px;right:16px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.2);width:260px;display:none;z-index:20}
-.menu-item{padding:12px;cursor:pointer}
-.menu-item:hover{background:#eee}
+.aside-item:hover{background:#eee}
+main{flex:1;padding:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.card{cursor:pointer}
+.thumb{width:100%;height:160px;background:#ccc;border-radius:12px}
+.channel-head{display:flex;gap:16px;align-items:center;margin-bottom:20px}
+.avatar{width:80px;height:80px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-size:32px}
+video{width:100%;max-height:70vh;border-radius:12px}
+.comment{margin-top:8px}
 </style>
 </head>
 <body>
+
 <header>
   <div class="logo">MiniTube</div>
-  <input placeholder="Rechercher" />
-  <button>🔍</button>
-  <div style="margin-left:auto;display:flex;align-items:center;gap:12px;position:relative">
+  <input id="search" placeholder="Rechercher une chaîne" />
+  <button onclick="searchChannel()">🔍</button>
+  <div style="margin-left:auto">
     <button id="loginBtn" onclick="login()">Se connecter</button>
-    <div id="profile" onclick="toggleMenu()" style="display:none;width:32px;height:32px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-weight:bold;cursor:pointer"></div>
-    <div id="menu" class="menu">
-      <div style="padding:16px;border-bottom:1px solid #ddd"><strong id="menuName"></strong><br><span style="color:#065fd4;cursor:pointer" onclick="openMyChannel()">Afficher votre chaîne</span></div>
-      <div class="menu-item">Compte MiniTube</div>
-      <div class="menu-item" onclick="logout()">Se déconnecter</div>
-    </div>
+    <div id="profile" style="display:none;width:32px;height:32px;border-radius:50%;background:#ccc;align-items:center;justify-content:center;font-weight:bold;cursor:pointer" onclick="toggleMenu()"></div>
   </div>
 </header>
+
 <div class="container">
 <aside>
   <div class="aside-item">🏠 Accueil</div>
-  <div class="aside-item">📺 Abonnements</div>
 </aside>
-<main id="view"></main>
+<main>
+  <div id="view"></div>
+</main>
 </div>
+
+<div id="menu" style="display:none;position:fixed;top:56px;right:16px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.2);width:220px">
+  <div style="padding:12px;font-weight:bold" id="menuName"></div>
+  <div style="padding:12px;cursor:pointer" onclick="logout()">Se déconnecter</div>
+</div>
+
 <script>
-let currentUser = localStorage.getItem('currentUser');
+const API = "https://vioxasite-backend.onrender.com";
+let currentUser = localStorage.getItem("currentUser");
+const view = document.getElementById("view");
+
 updateHeader();
+renderHome();
 
 function updateHeader(){
   const loginBtn=document.getElementById('loginBtn');
@@ -65,59 +68,115 @@ function updateHeader(){
     profile.style.display='flex';
     profile.textContent=currentUser[0].toUpperCase();
     menuName.textContent=currentUser;
-  } else {
+  }else{
     loginBtn.style.display='block';
     profile.style.display='none';
   }
 }
 
-function login(){
-  const name=prompt('Nom du compte MiniTube');
-  if(!name) return;
-  currentUser=name;
-  localStorage.setItem('currentUser',name);
-  updateHeader();
-}
-
 function toggleMenu(){
   const m=document.getElementById('menu');
-  m.style.display=m.style.display==='block'?'none':'block';
+  m.style.display = m.style.display==='block'?'none':'block';
+}
+
+function login(){
+  const name = prompt("Nom du compte MiniTube");
+  if(!name) return;
+  fetch(`${API}/users`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({name})
+  }).then(()=>{
+    currentUser=name;
+    localStorage.setItem("currentUser",name);
+    updateHeader();
+  });
 }
 
 function logout(){
   currentUser=null;
-  localStorage.removeItem('currentUser');
-  document.getElementById('menu').style.display='none';
+  localStorage.removeItem("currentUser");
   updateHeader();
-}
-
-function openMyChannel(){
   document.getElementById('menu').style.display='none';
-  renderMyChannel();
 }
 
-function renderMyChannel(){
-  const v=document.getElementById('view');
-  v.innerHTML=`
-    <div class="banner"></div>
-    <div class="channel-header">
-      <div class="channel-avatar">${currentUser[0].toUpperCase()}</div>
-      <div class="channel-meta">
-        <h2>${currentUser}</h2>
-        <p>@${currentUser.toLowerCase()} · 0 abonnés</p>
-        <button>Personnaliser la chaîne</button>
-        <button>Gérer les vidéos</button>
+// ===== HOME =====
+function renderHome(){
+  view.innerHTML="<h2>Recherchez une chaîne pour commencer</h2>";
+}
+
+// ===== SEARCH (BACKEND) =====
+function searchChannel(){
+  const q=document.getElementById('search').value.trim();
+  if(!q) return;
+
+  fetch(`${API}/users/${q}`)
+    .then(res=>{
+      if(!res.ok) throw new Error();
+      return res.json();
+    })
+    .then(user=>showChannel(user))
+    .catch(()=>alert("Chaîne introuvable"));
+}
+
+// ===== CHANNEL PAGE =====
+function showChannel(user){
+  view.innerHTML=`
+    <div class="channel-head">
+      <div class="avatar">${user.avatar}</div>
+      <div>
+        <h2>${user.name}</h2>
+        <p>${user.subscribers.length} abonnés · ${user.videos.length} vidéos</p>
+        ${currentUser && currentUser!==user.name ? `<button onclick="subscribe('${user.name}')">S'abonner</button>`:''}
       </div>
     </div>
-    <div class="tabs">
-      <div class="tab active">Accueil</div>
-      <div class="tab">Playlists</div>
-      <div class="tab">Posts</div>
+    <div class="grid">
+      ${user.videos.map(v=>`
+        <div class="card" onclick="openVideo('${user.name}','${v.id}')">
+          <div class="thumb"></div>
+          <h3>${v.title}</h3>
+        </div>
+      `).join('')}
     </div>
-    <div class="empty">
-      <p>Créez des contenus sur n'importe quel appareil</p>
-      <button>Créer</button>
-    </div>`;
+  `;
+}
+
+function subscribe(to){
+  fetch(`${API}/subscribe`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({from:currentUser,to})
+  }).then(()=>searchChannel());
+}
+
+// ===== VIDEO PAGE =====
+function openVideo(user,id){
+  fetch(`${API}/users/${user}`)
+    .then(r=>r.json())
+    .then(u=>{
+      const v=u.videos.find(v=>v.id===id);
+      view.innerHTML=`
+        <video controls src="${v.url}"></video>
+        <h2>${v.title}</h2>
+        <h4>${user}</h4>
+        <div>
+          <textarea id="commentText" placeholder="Ajouter un commentaire"></textarea>
+          <button onclick="sendComment('${id}')">Envoyer</button>
+        </div>
+        <div>
+          ${v.comments.map(c=>`<div class="comment"><b>${c.user}</b> : ${c.text}</div>`).join('')}
+        </div>
+      `;
+    });
+}
+
+function sendComment(id){
+  const text=document.getElementById('commentText').value;
+  fetch(`${API}/videos/${id}/comments`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({user:currentUser,text})
+  }).then(()=>alert("Commentaire envoyé"));
 }
 </script>
 </body>
