@@ -1,121 +1,135 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>MiniTube – Comptes & Chaînes (local)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: Roboto, Arial, sans-serif; background:#0f0f0f; color:#fff; }
-    header { height:56px; display:flex; align-items:center; gap:12px; padding:0 16px; background:#181818; border-bottom:1px solid #303030; }
-    header input { flex:1; padding:8px; background:#121212; border:1px solid #303030; color:#fff; }
-    header button { padding:8px 12px; background:#303030; border:none; color:#fff; cursor:pointer; }
-    .layout { display:grid; grid-template-columns:240px 1fr; height:calc(100vh - 56px); }
-    aside { background:#181818; padding:12px; border-right:1px solid #303030; }
-    main { padding:16px; overflow-y:auto; }
-    .card { background:#181818; padding:12px; border-radius:8px; margin-bottom:12px; }
-    .btn { padding:6px 10px; background:#cc0000; border:none; color:white; cursor:pointer; border-radius:4px; }
-    .btn.gray { background:#303030; }
-    textarea { width:100%; background:#121212; color:white; border:1px solid #303030; padding:6px; }
-  </style>
+<meta charset="UTF-8" />
+<title>MiniTube – Full YouTube-like</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Roboto,Arial,sans-serif;background:#0f0f0f;color:#fff}
+header{height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;background:#181818;border-bottom:1px solid #303030}
+header input{flex:1;padding:8px;background:#121212;border:1px solid #303030;color:#fff}
+header button{padding:8px 12px;background:#303030;border:none;color:#fff;cursor:pointer}
+main{max-width:1000px;margin:auto;padding:24px}
+.card{background:#181818;padding:16px;border-radius:12px;margin-bottom:16px}
+.avatar{width:80px;height:80px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;font-size:32px}
+.channel-head{display:flex;gap:16px;align-items:center}
+.btn{padding:6px 12px;border:none;border-radius:6px;cursor:pointer}
+.btn.sub{background:#cc0000;color:#fff}
+.btn.gray{background:#303030;color:#fff}
+.video-item{cursor:pointer;padding:8px;border-bottom:1px solid #303030}
+video{width:100%;border-radius:8px;background:black}
+textarea{width:100%;background:#121212;color:white;border:1px solid #303030;padding:8px}
+.like{cursor:pointer;color:#aaa}
+.like.active{color:#ff0000}
+</style>
 </head>
 <body>
 <header>
-  <strong>MiniTube</strong>
-  <input id="search" placeholder="Rechercher une chaîne" />
-  <button onclick="searchChannel()">🔍</button>
+<strong>MiniTube</strong>
+<input id="search" placeholder="Rechercher" />
+<button onclick="searchCreator()">🔍</button>
 </header>
 
-<div class="layout">
-  <aside>
-    <div class="card">
-      <h3>Créer un compte</h3>
-      <input id="username" placeholder="Nom de la chaîne" />
-      <button class="btn" onclick="createAccount()">Créer</button>
-    </div>
-    <div class="card" id="currentUser"></div>
-  </aside>
-
-  <main>
-    <div id="channelView"></div>
-    <div id="comments"></div>
-  </main>
+<main>
+<div class="card">
+<h3>Créer une chaîne</h3>
+<input id="creatorName" placeholder="Nom du créateur" />
+<button class="btn sub" onclick="createChannel()">Créer la chaîne</button>
+<hr style="border:1px solid #303030;margin:12px 0">
+<h3>Uploader une vidéo</h3>
+<input id="videoCreator" placeholder="Nom de la chaîne" />
+<input type="file" accept="video/*" onchange="uploadVideo(event)" />
 </div>
 
+<div id="view"></div>
+</main>
+
 <script>
-  let users = JSON.parse(localStorage.getItem('users') || '{}');
-  let currentUser = localStorage.getItem('currentUser');
+let data = JSON.parse(localStorage.getItem('data')||'{}');
+let currentUser = localStorage.getItem('user') || null;
 
-  function save() {
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.setItem('currentUser', currentUser);
-  }
+function save(){localStorage.setItem('data',JSON.stringify(data));localStorage.setItem('user',currentUser)}
 
-  function createAccount() {
-    const name = username.value.trim();
-    if (!name || users[name]) return alert('Nom invalide ou déjà pris');
-    users[name] = { subs: [], comments: [] };
-    currentUser = name;
-    save();
-    renderCurrent();
-  }
+function createChannel(){
+ const name=creatorName.value.trim();
+ if(!name) return alert('Nom manquant');
+ if(data[name]) return alert('Chaîne déjà existante');
+ data[name]={subs:[],videos:[]};
+ currentUser=name; save(); alert('Chaîne créée');
+}
 
-  function renderCurrent() {
-    currentUserDiv.innerHTML = currentUser
-      ? `<p>Connecté : <b>${currentUser}</b></p>`
-      : '<p>Non connecté</p>';
-  }
+function uploadVideo(e){
+ const name=videoCreator.value.trim();
+ const file=e.target.files[0];
+ if(!name||!file) return alert('Manque info');
+ if(!data[name]) return alert('Chaîne inexistante');
+ const url=URL.createObjectURL(file);
+ data[name].videos.unshift({title:file.name,url,views:0,likes:[],comments:[]});
+ currentUser=name; save(); alert('Vidéo uploadée');
+}
 
-  function searchChannel() {
-    const q = search.value.trim();
-    if (!users[q]) return alert('Chaîne introuvable');
+function searchCreator(){
+ const q=search.value.trim();
+ if(!data[q]) return view.innerHTML='<p>Aucun résultat</p>';
+ openChannel(q);
+}
 
-    const subscribed = currentUser && users[q].subs.includes(currentUser);
+function openChannel(name){
+ const c=data[name];
+ const subbed=currentUser&&c.subs.includes(currentUser);
+ view.innerHTML=`
+ <div class="card">
+  <div class="channel-head">
+   <div class="avatar">${name[0]}</div>
+   <div>
+    <h2>${name}</h2>
+    <p>${c.subs.length} abonnés · ${c.videos.length} vidéos</p>
+    ${currentUser&&currentUser!==name?`<button class="btn ${subbed?'gray':'sub'}" onclick="toggleSub('${name}')">${subbed?'Se désabonner':'S\'abonner'}</button>`:''}
+   </div>
+  </div>
+ </div>
+ <div class="card">
+  <h3>Vidéos</h3>
+  ${c.videos.map((v,i)=>`<div class="video-item" onclick="openVideo('${name}',${i})">🎬 ${v.title} · ${v.views} vues</div>`).join('')||'<p>Aucune vidéo</p>'}
+ </div>`;
+}
 
-    channelView.innerHTML = `
-      <div class="card">
-        <h2>${q}</h2>
-        <p>${users[q].subs.length} abonnés</p>
-        ${currentUser && currentUser !== q ?
-          `<button class="btn ${subscribed ? 'gray' : ''}" onclick="toggleSub('${q}')">
-            ${subscribed ? 'Se désabonner' : 'S\'abonner'}
-          </button>` : ''}
-      </div>
-    `;
+function toggleSub(name){
+ const s=data[name].subs;
+ s.includes(currentUser)?data[name].subs=s.filter(x=>x!==currentUser):s.push(currentUser);
+ save(); openChannel(name);
+}
 
-    renderComments(q);
-  }
+function openVideo(name,i){
+ const v=data[name].videos[i]; v.views++; save();
+ const liked=currentUser&&v.likes.includes(currentUser);
+ view.innerHTML=`
+ <div class="card">
+  <video controls src="${v.url}"></video>
+  <h2>${v.title}</h2>
+  <p>${v.views} vues</p>
+  <span class="like ${liked?'active':''}" onclick="toggleLike('${name}',${i})">❤️ ${v.likes.length}</span>
+  <p>Chaîne : <b style="cursor:pointer" onclick="openChannel('${name}')">${name}</b></p>
+ </div>
+ <div class="card">
+  <h3>Commentaires</h3>
+  ${currentUser?`<textarea id="cmt"></textarea><button class="btn sub" onclick="addComment('${name}',${i})">Commenter</button>`:'<p>Connecte-toi pour commenter</p>'}
+  ${v.comments.map(c=>`<p><b>${c.user}</b> : ${c.text}</p>`).join('')}
+ </div>`;
+}
 
-  function toggleSub(channel) {
-    const subs = users[channel].subs;
-    if (subs.includes(currentUser))
-      users[channel].subs = subs.filter(s => s !== currentUser);
-    else subs.push(currentUser);
-    save();
-    searchChannel();
-  }
+function toggleLike(name,i){
+ const l=data[name].videos[i].likes;
+ l.includes(currentUser)?data[name].videos[i].likes=l.filter(x=>x!==currentUser):l.push(currentUser);
+ save(); openVideo(name,i);
+}
 
-  function renderComments(channel) {
-    comments.innerHTML = `
-      <div class="card">
-        <h3>Commentaires</h3>
-        ${currentUser ? `<textarea id="commentText"></textarea>
-        <button class="btn" onclick="addComment('${channel}')">Commenter</button>` : '<p>Connecte-toi pour commenter</p>'}
-        <div>${users[channel].comments.map(c => `<p><b>${c.user}</b> : ${c.text}</p>`).join('')}</div>
-      </div>
-    `;
-  }
-
-  function addComment(channel) {
-    const text = commentText.value.trim();
-    if (!text) return;
-    users[channel].comments.unshift({ user: currentUser, text });
-    save();
-    renderComments(channel);
-  }
-
-  const currentUserDiv = document.getElementById('currentUser');
-  renderCurrent();
+function addComment(name,i){
+ const t=cmt.value.trim(); if(!t)return;
+ data[name].videos[i].comments.unshift({user:currentUser,text:t});
+ save(); openVideo(name,i);
+}
 </script>
 </body>
 </html>
