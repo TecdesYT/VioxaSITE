@@ -79,14 +79,18 @@ textarea{width:100%;padding:8px}
 
 <div id="view"></div>
 </main>
-</di = JSON.parse(localStorage.getItem('data')||'{}');
-let viewrentUser = localStorage.getItem('currentUser');
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem('data')||'{}');
+let view=document.getElementById('view');
+let currentUser = localStorage.getItem('currentUser');
 updateHeader();
 
 renderHome();
 
 function updateHeader(){
-  const loginBtn=documenoginBtn');
+  const loginBtn=document.getElementById('loginBtn');
   const profile=document.getElementById('profile');
   if(currentUser){
     loginBtn.style.display='none';
@@ -99,9 +103,8 @@ function updateHeader(){
 }
 
 function login(){
-  const name=prompt('Nom de la chaîne');
+  const name=prompt('Nom du compte MiniTube');
   if(!name) return;
-  if(!data[name]) data[name]={subs:[],videos:[]};
   currentUser=name;
   localStorage.setItem('currentUser',name);
   updateHeader();
@@ -109,7 +112,7 @@ function login(){
 
 function openCreate(){
   if(!currentUser) return alert('Connecte-toi pour créer');
-  alert('Zone création (upload / live / post)');
+  alert('Créer : Upload vidéo / Live / Post (à venir)');
 }
 
 function renderHome(){
