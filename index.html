@@ -9,18 +9,18 @@
 body{margin:0;font-family:Roboto,Arial,sans-serif;background:#2b2d31;color:#e5e7eb}
 header{height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;background:#1e1f22;border-bottom:1px solid #3f4147;position:fixed;top:0;left:0;right:0}
 .logo{color:#ff0000;font-weight:700;font-size:20px}
-header input{flex:1;max-width:600px;padding:8px}
-header button{padding:8px 12px;cursor:pointer}
+header input{flex:1;max-width:600px;padding:8px;background:#313338;color:#e5e7eb;border:none;border-radius:6px}
+header button{padding:8px 12px;cursor:pointer;background:#313338;color:#e5e7eb;border:none;border-radius:6px}
 .container{display:flex;margin-top:56px}
 aside{width:220px;padding:12px;background:#1e1f22;border-right:1px solid #3f4147}
 .aside-item{padding:10px;border-radius:8px;cursor:pointer}
-.aside-item:hover{background:#eee}
+.aside-item:hover{background:#313338}
 main{flex:1;padding:24px;background:#2b2d31}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
 .card{cursor:pointer}
 .thumb{width:100%;height:160px;background:#3f4147;border-radius:12px}
 .channel-head{display:flex;gap:16px;align-items:center;margin-bottom:20px}
-.avatar{width:80px;height:80px;border-radius:50%;background:#ccc;display:flex;align-items:center;justify-content:center;font-size:32px}
+.avatar{width:80px;height:80px;border-radius:50%;background:#3f4147;display:flex;align-items:center;justify-content:center;font-size:32px}
 video{width:100%;max-height:70vh;border-radius:12px}
 .comment{margin-top:8px}
 </style>
@@ -30,10 +30,10 @@ video{width:100%;max-height:70vh;border-radius:12px}
 <header>
   <div class="logo">Tubex</div>
   <input id="search" placeholder="Rechercher une chaîne" />
-  <button onclick="searchChannel()">🔍</button>
-  <div style="margin-left:auto">
-    <button id="loginBtn" onclick="login()">Se connecter</button>
-    <div id="profile" style="display:none;width:32px;height:32px;border-radius:50%;background:#ccc;align-items:center;justify-content:center;font-weight:bold;cursor:pointer" onclick="toggleMenu()"></div>
+  <button id="searchBtn">🔍</button>
+  <div style="margin-left:auto;display:flex;gap:8px">
+    <button id="loginBtn">Se connecter</button>
+    <div id="profile" style="display:none;width:32px;height:32px;border-radius:50%;background:#3f4147;align-items:center;justify-content:center;font-weight:bold;cursor:pointer"></div>
   </div>
 </header>
 
@@ -46,9 +46,9 @@ video{width:100%;max-height:70vh;border-radius:12px}
 </main>
 </div>
 
-<div id="menu" style="display:none;position:fixed;top:56px;right:16px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.2);width:220px">
+<div id="menu" style="display:none;position:fixed;top:56px;right:16px;background:#1e1f22;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.4);width:220px">
   <div style="padding:12px;font-weight:bold" id="menuName"></div>
-  <div style="padding:12px;cursor:pointer" onclick="logout()">Se déconnecter</div>
+  <div style="padding:12px;cursor:pointer" id="logoutBtn">Se déconnecter</div>
 </div>
 
 <script>
@@ -56,9 +56,17 @@ const API = "https://vioxasite-backend.onrender.com";
 let currentUser = localStorage.getItem("currentUser");
 const view = document.getElementById("view");
 
+// ===== INIT =====
 updateHeader();
 renderHome();
 
+// ===== EVENTS =====
+document.getElementById("searchBtn").addEventListener("click", searchChannel);
+document.getElementById("loginBtn").addEventListener("click", login);
+document.getElementById("profile").addEventListener("click", toggleMenu);
+document.getElementById("logoutBtn").addEventListener("click", logout);
+
+// ===== UI =====
 function updateHeader(){
   const loginBtn=document.getElementById('loginBtn');
   const profile=document.getElementById('profile');
@@ -71,6 +79,7 @@ function updateHeader(){
   }else{
     loginBtn.style.display='block';
     profile.style.display='none';
+    document.getElementById('menu').style.display='none';
   }
 }
 
@@ -79,8 +88,9 @@ function toggleMenu(){
   m.style.display = m.style.display==='block'?'none':'block';
 }
 
+// ===== AUTH =====
 function login(){
-  const name = prompt("Nom du compte MiniTube");
+  const name = prompt("Nom du compte Tubex");
   if(!name) return;
   fetch(`${API}/users`,{
     method:"POST",
@@ -97,7 +107,6 @@ function logout(){
   currentUser=null;
   localStorage.removeItem("currentUser");
   updateHeader();
-  document.getElementById('menu').style.display='none';
 }
 
 // ===== HOME =====
@@ -105,19 +114,19 @@ function renderHome(){
   view.innerHTML="<h2>Recherchez une chaîne pour commencer</h2>";
 }
 
-// ===== SEARCH (SMART SEARCH) =====
+// ===== SEARCH (ROBUST) =====
 function normalize(str){
   return str.toLowerCase().replace(/[^a-z]/g, "");
 }
 
 function searchChannel(){
-  const input = document.getElementById('search').value.trim();
+  const input=document.getElementById('search').value.trim();
   if(!input) return;
   const query = normalize(input);
 
   fetch(`${API}/users`)
-    .then(res => res.json())
-    .then(users => {
+    .then(res=>res.json())
+    .then(users=>{
       const found = users.find(u => normalize(u.name).includes(query));
       if(!found){
         alert('Chaîne introuvable');
@@ -126,10 +135,9 @@ function searchChannel(){
       showChannel(found);
     })
     .catch(()=>alert('Erreur serveur'));
-}(()=>alert("Chaîne introuvable"));
 }
 
-// ===== CHANNEL PAGE =====
+// ===== CHANNEL =====
 function showChannel(user){
   view.innerHTML=`
     <div class="channel-head">
@@ -137,12 +145,12 @@ function showChannel(user){
       <div>
         <h2>${user.name}</h2>
         <p>${user.subscribers.length} abonnés · ${user.videos.length} vidéos</p>
-        ${currentUser && currentUser!==user.name ? `<button onclick="subscribe('${user.name}')">S'abonner</button>`:''}
+        ${currentUser && currentUser!==user.name ? `<button onclick=\"subscribe('${user.name}')\">S'abonner</button>`:''}
       </div>
     </div>
     <div class="grid">
       ${user.videos.map(v=>`
-        <div class="card" onclick="openVideo('${user.name}','${v.id}')">
+        <div class="card" onclick=\"openVideo('${user.name}','${v.id}')\">
           <div class="thumb"></div>
           <h3>${v.title}</h3>
         </div>
@@ -152,6 +160,7 @@ function showChannel(user){
 }
 
 function subscribe(to){
+  if(!currentUser) return alert('Connecte-toi');
   fetch(`${API}/subscribe`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
@@ -159,7 +168,7 @@ function subscribe(to){
   }).then(()=>searchChannel());
 }
 
-// ===== VIDEO PAGE =====
+// ===== VIDEO =====
 function openVideo(user,id){
   fetch(`${API}/users/${user}`)
     .then(r=>r.json())
@@ -169,10 +178,8 @@ function openVideo(user,id){
         <video controls src="${v.url}"></video>
         <h2>${v.title}</h2>
         <h4>${user}</h4>
-        <div>
-          <textarea id="commentText" placeholder="Ajouter un commentaire"></textarea>
-          <button onclick="sendComment('${id}')">Envoyer</button>
-        </div>
+        <textarea id="commentText" placeholder="Ajouter un commentaire"></textarea>
+        <button onclick=\"sendComment('${id}')\">Envoyer</button>
         <div>
           ${v.comments.map(c=>`<div class="comment"><b>${c.user}</b> : ${c.text}</div>`).join('')}
         </div>
@@ -182,11 +189,12 @@ function openVideo(user,id){
 
 function sendComment(id){
   const text=document.getElementById('commentText').value;
+  if(!text) return;
   fetch(`${API}/videos/${id}/comments`,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({user:currentUser,text})
-  }).then(()=>alert("Commentaire envoyé"));
+  }).then(()=>alert('Commentaire envoyé'));
 }
 </script>
 </body>
