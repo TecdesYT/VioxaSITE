@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<title>MiniTube</title>
+<title>Tubex</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
 *{box-sizing:border-box}
@@ -28,7 +28,7 @@ video{width:100%;max-height:70vh;border-radius:12px}
 <body>
 
 <header>
-  <div class="logo">MiniTube</div>
+  <div class="logo">TUBEX</div>
   <input id="search" placeholder="Rechercher une chaîne" />
   <button onclick="searchChannel()">🔍</button>
   <div style="margin-left:auto">
@@ -80,7 +80,7 @@ function toggleMenu(){
 }
 
 function login(){
-  const name = prompt("Nom du compte MiniTube");
+  const name = prompt("Nom du compte Tubex");
   if(!name) return;
   fetch(`${API}/users`,{
     method:"POST",
@@ -181,3 +181,4 @@ function sendComment(id){
 </script>
 </body>
 </html>
+
