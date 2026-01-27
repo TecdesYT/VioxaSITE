@@ -31,15 +31,28 @@ video{width:100%;max-height:70vh;border-radius:12px}
   <div class="logo">Tubex</div>
   <input id="search" placeholder="Rechercher une chaîne" />
   <button id="searchBtn">🔍</button>
-  <div style="margin-left:auto;display:flex;gap:8px">
-    <button id="loginBtn">Se connecter</button>
-    <div id="profile" style="display:none;width:32px;height:32px;border-radius:50%;background:#3f4147;align-items:center;justify-content:center;font-weight:bold;cursor:pointer"></div>
+  <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+    <button id="createBtn" style="padding:8px 12px;border-radius:18px;border:1px solid #444;background:#2b2d31;color:#fff;cursor:pointer" onclick="openCreate()">➕ Créer</button>
+    <button id="loginBtn" style="padding:8px 12px;border-radius:18px;border:1px solid #5865f2;background:#5865f2;color:white;cursor:pointer" onclick="login()">Se connecter</button>
+    <div id="profile" style="display:none;width:32px;height:32px;border-radius:50%;background:#5865f2;display:flex;align-items:center;justify-content:center;font-weight:bold;cursor:pointer;color:white" onclick="toggleMenu()"></div>
+    <div id="menu" style="display:none;position:absolute;top:56px;right:16px;background:#1e1f22;color:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.4);width:260px;overflow:hidden;z-index:20">
+      <div style="padding:16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #333">
+        <div style="width:40px;height:40px;border-radius:50%;background:#5865f2;display:flex;align-items:center;justify-content:center;font-weight:bold">?</div>
+        <div>
+          <strong id="menuName"></strong><br>
+          <span style="color:#8ab4f8;cursor:pointer" onclick="openMyChannel()">Afficher votre chaîne</span>
+        </div>
+      </div>
+      <div style="padding:12px;cursor:pointer">Compte Tubex</div>
+      <div style="padding:12px;cursor:pointer" onclick="logout()">Se déconnecter</div>
+    </div>
   </div>
 </header>
 
 <div class="container">
 <aside>
-  <div class="aside-item">🏠 Accueil</div>
+  <div class="aside-item" onclick="renderHome()">🏠 Accueil</div>
+  <div class="aside-item" onclick="renderSubscriptions()">📺 Abonnements</div>
 </aside>
 <main>
   <div id="view"></div>
@@ -110,6 +123,28 @@ function logout(){
 }
 
 // ===== HOME =====
+let subscriptions = JSON.parse(localStorage.getItem('subs')||'[]');
+
+function renderSubscriptions(){
+  if(!currentUser) return alert('Connecte-toi');
+  if(subscriptions.length===0){
+    view.innerHTML='<h2>Aucun abonnement</h2>';
+    return;
+  }
+  view.innerHTML=`<h2>Abonnements</h2><div class='grid'>${subscriptions.map(c=>`
+    <div class='card' onclick="searchExact('${c}')">
+      <div class='thumb'></div>
+      <h3>${c}</h3>
+    </div>`).join('')}</div>`;
+}
+
+function searchExact(name){
+  fetch(`${API}/users`).then(r=>r.json()).then(users=>{
+    const u=users.find(x=>x.name===name);
+    if(u) showChannel(u);
+  });
+}
+
 function renderHome(){
   view.innerHTML="<h2>Recherchez une chaîne pour commencer</h2>";
 }
@@ -169,6 +204,20 @@ function subscribe(to){
 }
 
 // ===== VIDEO =====
+function subscribe(channel){
+  if(!subscriptions.includes(channel)){
+    subscriptions.push(channel);
+    localStorage.setItem('subs',JSON.stringify(subscriptions));
+  }
+}
+
+function openMyChannel(){
+  fetch(`${API}/users`).then(r=>r.json()).then(users=>{
+    const u=users.find(x=>x.name===currentUser);
+    if(u) showChannel(u);
+  });
+}
+
 function openVideo(user,id){
   fetch(`${API}/users/${user}`)
     .then(r=>r.json())
